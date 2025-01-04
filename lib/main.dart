@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/pages/providers/theme/theme_provider.dart';
 import 'package:todo_flutter_app/pages/todos_page.dart';
+import 'package:todo_flutter_app/repositories/fake_todos_repository.dart';
+import 'package:todo_flutter_app/repositories/providers/todos_repository_provider.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    ProviderScope(
+      overrides: [
+        todosRepositoryProvider.overrideWithValue(FakeTodosRepository())
+      ],
+      child: const MyApp(),
     ),
   );
 }

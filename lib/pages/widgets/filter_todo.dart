@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/models/todo_model.dart';
 import 'package:todo_flutter_app/pages/providers/todo_filter/todo_filter_provider.dart';
+import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_provider.dart';
+import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_state.dart';
 
 class FilterTodo extends StatelessWidget {
   const FilterTodo({super.key});
@@ -29,10 +31,13 @@ class FilterButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentFilter = ref.watch(todoFilterProvider);
+    final todoListState = ref.watch(todoListProvider);
     return TextButton(
-      onPressed: () {
-        ref.read(todoFilterProvider.notifier).changeFilter(filter);
-      },
+      onPressed: todoListState.status == TodoListStatus.loading
+          ? null
+          : () {
+              ref.read(todoFilterProvider.notifier).changeFilter(filter);
+            },
       child: Text(
         filter == Filter.all
             ? "ALL"
