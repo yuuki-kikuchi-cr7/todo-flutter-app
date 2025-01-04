@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:todo_flutter_app/pages/widgets/filter_todo.dart';
 import 'package:todo_flutter_app/pages/widgets/new_todo.dart';
 import 'package:todo_flutter_app/pages/widgets/search_todo.dart';
@@ -12,25 +14,33 @@ class TodosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              TodoHeader(),
-              NewTodo(),
-              SizedBox(
-                height: 20,
-              ),
-              SearchTodo(),
-              SizedBox(
-                height: 10,
-              ),
-              FilterTodo(),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(child: ShowTodos()),
-            ],
+        body: LoaderOverlay(
+          useDefaultLoading: false,
+          overlayWidgetBuilder: (progress) {
+            return const SpinKitFadingCircle(
+              color: Colors.grey,
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                TodoHeader(),
+                NewTodo(),
+                SizedBox(
+                  height: 20,
+                ),
+                SearchTodo(),
+                SizedBox(
+                  height: 10,
+                ),
+                FilterTodo(),
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(child: ShowTodos()),
+              ],
+            ),
           ),
         ),
       ),

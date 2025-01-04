@@ -6,12 +6,12 @@ part of 'todo_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$todoListHash() => r'27e59cf329ede22300a9f0f6d8dcb3d0540b6c77';
+String _$todoListHash() => r'cc11e8acde4a03ad6b7aff33bf48deb5704e3cec';
 
 /// See also [TodoList].
 @ProviderFor(TodoList)
 final todoListProvider =
-    AutoDisposeNotifierProvider<TodoList, List<Todo>>.internal(
+    AutoDisposeNotifierProvider<TodoList, TodoListState>.internal(
   TodoList.new,
   name: r'todoListProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final todoListProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TodoList = AutoDisposeNotifier<List<Todo>>;
+typedef _$TodoList = AutoDisposeNotifier<TodoListState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
