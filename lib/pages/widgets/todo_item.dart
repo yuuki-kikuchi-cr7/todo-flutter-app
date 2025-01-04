@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/models/todo_model.dart';
+import 'package:todo_flutter_app/pages/providers/todo_item/todo_item_provider.dart';
 import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_provider.dart';
 
 class TodoItem extends ConsumerWidget {
-  final Todo todo;
   const TodoItem({
     super.key,
-    required this.todo,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final todo = ref.watch(todoItemProvider);
+    print("building item");
     return ListTile(
       onTap: () {
         showDialog(
