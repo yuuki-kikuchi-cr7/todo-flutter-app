@@ -52,7 +52,8 @@ class _ShowTodosState extends ConsumerState<ShowTodos> {
     ref.listen<TodoListState>(
       todoListProvider,
       (previus, next) {
-        if (next.status == TodoListStatus.failure) {
+        switch(next) {
+          case TodoListStateFailure(error:String error):
           showDialog(
             context: context,
             builder: (context) {
@@ -62,29 +63,30 @@ class _ShowTodosState extends ConsumerState<ShowTodos> {
                   textAlign: TextAlign.center,
                 ),
                 content: Text(
-                  next.error,
+                  error,
                   textAlign: TextAlign.center,
                 ),
               );
             },
           );
+          case _:
         }
       },
     );
     final todoListState = ref.watch(todoListProvider);
 
-    switch (todoListState.status) {
-      case TodoListStatus.initial:
+    switch (todoListState) {
+      case TodoListStateInitial():
         return const SizedBox.shrink();
-      case TodoListStatus.loading:
+      case TodoListStateLoading():
         return prevTodosWidget;
-      case TodoListStatus.failure when prevTodosWidget is SizedBox:
+      case TodoListStateFailure(error:var error) when prevTodosWidget is SizedBox:
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                todoListState.error,
+                error,
                 style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(
@@ -102,10 +104,10 @@ class _ShowTodosState extends ConsumerState<ShowTodos> {
             ],
           ),
         );
-      case TodoListStatus.failure:
+      case TodoListStateFailure(error: _):
         return prevTodosWidget;
-      case TodoListStatus.success:
-        final filteredTodos = filterTodos(todoListState.todos);
+      case TodoListStateSuccess(todos:var allTodos):
+        final filteredTodos = filterTodos(allTodos);
 
         prevTodosWidget = ListView.separated(
           itemBuilder: (context, index) {

@@ -21,10 +21,10 @@ class _SearchTodoState extends ConsumerState<SearchTodo> {
     super.dispose();
   }
 
-  bool enableOrNot(TodoListStatus status) {
-    switch (status) {
-      case TodoListStatus.failure when prevWidget is SizedBox:
-      case TodoListStatus.loading || TodoListStatus.initial:
+  bool enableOrNot(TodoListState state) {
+    switch (state) {
+      case TodoListStateFailure(error: _) when prevWidget is SizedBox:
+      case TodoListStateLoading() || TodoListStateInitial():
         return false;
       case _:
         prevWidget = Container();
@@ -36,7 +36,7 @@ class _SearchTodoState extends ConsumerState<SearchTodo> {
   Widget build(BuildContext context) {
     final todoListState = ref.watch(todoListProvider);
     return TextField(
-      enabled: enableOrNot(todoListState.status),
+      enabled: enableOrNot(todoListState),
       decoration: const InputDecoration(
           labelText: "Search todos ...",
           border: InputBorder.none,

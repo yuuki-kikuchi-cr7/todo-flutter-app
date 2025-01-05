@@ -31,11 +31,9 @@ class FilterButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentFilter = ref.watch(todoFilterProvider);
-    final todoListState = ref.watch(todoListProvider);
+    //final todoListState = ref.watch(todoListProvider);
     return TextButton(
-      onPressed: todoListState.status == TodoListStatus.loading
-          ? null
-          : () {
+      onPressed:  () {
               ref.read(todoFilterProvider.notifier).changeFilter(filter);
             },
       child: Text(
