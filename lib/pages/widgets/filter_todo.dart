@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/models/todo_model.dart';
 import 'package:todo_flutter_app/pages/providers/todo_filter/todo_filter_provider.dart';
-import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_provider.dart';
-import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_state.dart';
+
 
 class FilterTodo extends StatelessWidget {
   const FilterTodo({super.key});

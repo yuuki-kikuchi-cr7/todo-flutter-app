@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_flutter_app/models/todo_model.dart';
 import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_provider.dart';
-import 'package:todo_flutter_app/pages/providers/todo_list/todo_list_state.dart';
 import 'package:todo_flutter_app/pages/providers/todo_search/todo_search_provider.dart';
 import 'package:todo_flutter_app/utils/debounce.dart';
 
@@ -21,15 +21,16 @@ class _SearchTodoState extends ConsumerState<SearchTodo> {
     super.dispose();
   }
 
-  bool enableOrNot(TodoListState state) {
-    switch (state) {
-      case TodoListStateFailure(error: _) when prevWidget is SizedBox:
-      case TodoListStateLoading() || TodoListStateInitial():
-        return false;
-      case _:
+  bool enableOrNot(AsyncValue<List<Todo>> state) {
+    return state.when(
+      data: (_){
         prevWidget = Container();
         return true;
-    }
+      },
+      error: (_,__)=> prevWidget is SizedBox ?false : true,
+      loading: ()=> false,
+    );
+    
   }
 
   @override
